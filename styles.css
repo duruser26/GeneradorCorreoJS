@@ -1,0 +1,235 @@
+:root {
+  --azul-pastel: #d6e6ff;
+  --azul-oscuro: #4a6fa5;
+  --verde-pastel: #d4edda;
+  --rosa-pastel: #f8d7da;
+  --blanco: #ffffff;
+  --gris-texto: #495057;
+  --sombra: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --verde-exito: #4caf50;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--azul-pastel);
+  color: var(--gris-texto);
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.contenedor {
+  display: flex;
+  height: calc(100vh - 40px);
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* COLUMNA IZQUIERDA */
+.columna-izquierda {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+  min-width: 0;
+}
+
+.instrucciones {
+  background-color: var(--blanco);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--sombra);
+  flex: 0 0 auto;
+}
+
+.instrucciones h2 {
+  color: #2c5282;
+  margin-top: 0;
+  border-bottom: 2px solid var(--azul-oscuro);
+  padding-bottom: 10px;
+}
+
+.pasos {
+  counter-reset: step-counter;
+  padding-left: 10px;
+}
+
+.pasos li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  counter-increment: step-counter;
+  list-style-type: none;
+  line-height: 1.5;
+}
+
+.pasos li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--azul-oscuro);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.detalle {
+  display: inline-block;
+  color: #4a5568;
+  font-size: 14px;
+  margin-top: 5px;
+  padding-left: 8px;
+  border-left: 3px solid var(--azul-oscuro);
+}
+
+.nota-destacada {
+  background-color: #fff3cd;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  border-left: 4px solid #ffc107;
+  font-size: 14px;
+}
+
+.nota-destacada strong {
+  color: #856404;
+}
+
+/* CONTENEDOR DE CARGA DE ARCHIVOS */
+.cargadores {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--blanco);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--sombra);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.grupo {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.boton-subir {
+  background-color: var(--azul-oscuro);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-subir:hover {
+  background-color: #3a5a80;
+  transform: translateY(-2px);
+}
+
+.boton-subir.subido {
+  background-color: var(--verde-exito);
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+.nombre-archivo {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--gris-texto);
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.3s;
+}
+
+.nombre-archivo.archivo-subido {
+  border-left: 4px solid var(--verde-exito);
+  background-color: #f0fff0;
+  font-weight: 500;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* COLUMNA DERECHA */
+.columna-derecha {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+#areaTexto {
+  flex: 1;
+  width: 100%;
+  resize: none;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  box-shadow: var(--sombra);
+  background-color: var(--blanco);
+}
+
+.botones {
+  display: flex;
+  gap: 15px;
+}
+
+.botones button {
+  flex: 1;
+  padding: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#generarBtn {
+  background-color: var(--azul-oscuro);
+  color: white;
+}
+
+#generarBtn:hover {
+  background-color: #3a5a80;
+}
+
+#copiarBtn {
+  background-color: var(--verde-pastel);
+  color: #155724;
+}
+
+#copiarBtn:hover {
+  background-color: #c3e6cb;
+}
+
+#borrarBtn {
+  background-color: var(--rosa-pastel);
+  color: #721c24;
+}
+
+#borrarBtn:hover {
+  background-color: #f5c6cb;
+}

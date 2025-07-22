@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de texto para correo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="contenedor">
+    
+    <div class="columna-izquierda">
+      <!-- DIV DE INSTRUCCIONES (Versión mejorada) -->
+      <div class="instrucciones">
+        <h2>Instrucciones paso a paso</h2>
+        <ol class="pasos">
+          <li>
+            <strong>Localizar en la carpeta de Alejandro el archivo CSV de los apartamentos.</strong><br>
+            <span class="detalle">Este debería llamarse: ListadoApartamentos(Fecha)</span>
+          </li>
+          <li>
+            <strong>Cargarlo pulsando el botón "Colgar CSV apartamentos hoy".</strong>
+          </li>
+          <li>
+            <strong>Descargar de Kross en XLSX del día de hoy.</strong><br>
+            <span class="detalle">Verificar que quien no haya entrado, su hora sean las 20:00 o más tarde.</span>
+          </li>
+          <li>
+            <strong>En el XLSX, buscar el "Guardar como" y elegir:</strong><br>
+            <span class="detalle">UTF-8 (Debería ser la quinta opción)</span>
+          </li>
+          <li>
+            <strong>Localizar ahora sí el CSV del día de hoy y colgarlo en el botón "Colgar CSV del día de hoy".</strong>
+          </li>
+          <li>
+            <strong>Copiar el texto y pegarlo en el correo.</strong>
+          </li>
+        </ol>
+
+        <div class="nota-destacada">
+          <p><strong>Importante:</strong> El sistema generará texto solo para huéspedes con llegada ≥20:00</p>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR DE CARGA DE ARCHIVOS -->
+      <div class="cargadores">
+        <div class="grupo">
+          <label class="boton-subir">
+            Colgar CSV apartamentos
+            <input type="file" id="csvApartamentos" accept=".csv" hidden>
+          </label>
+          <span id="nombreArchivoApartamentos" class="nombre-archivo"></span>
+        </div>
+
+        <div class="grupo">
+          <label class="boton-subir">
+            Colgar CSV del día de hoy
+            <input type="file" id="csvHuespedes" accept=".csv" hidden>
+          </label>
+          <span id="nombreArchivoHuespedes" class="nombre-archivo"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA (ÁREA DE TEXTO Y BOTONES) -->
+    <div class="columna-derecha">
+      <textarea id="areaTexto" readonly placeholder="Aquí se generará el texto..."></textarea>
+
+      <div class="botones">
+        <button id="generarBtn">Generar texto</button>
+        <button id="copiarBtn">Copiar texto</button>
+        <button id="borrarBtn">Borrar todo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
