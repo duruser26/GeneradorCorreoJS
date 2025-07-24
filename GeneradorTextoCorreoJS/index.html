@@ -9,7 +9,6 @@
   <div class="contenedor">
     
     <div class="columna-izquierda">
-      <!-- DIV DE INSTRUCCIONES (Versión mejorada) -->
       <div class="instrucciones">
         <h2>Instrucciones paso a paso</h2>
         <ol class="pasos">
@@ -18,18 +17,23 @@
             <span class="detalle">Este debería llamarse: ListadoApartamentos(Fecha)</span>
           </li>
           <li>
-            <strong>Cargarlo pulsando el botón "Colgar CSV apartamentos hoy".</strong>
+            <strong>Cargarlo pulsando el botón "Colgar CSV apartamentos".</strong>
+            <span class="detalle">El botón filtra por .csv, por lo que solo aparecerá ese archivo</span>
           </li>
           <li>
-            <strong>Descargar de Kross en XLSX del día de hoy.</strong><br>
-            <span class="detalle">Verificar que quien no haya entrado, su hora sean las 20:00 o más tarde.</span>
+            <strong>Acceder a las reservas en la parte de Reservas de Kross</strong><br>
+            <span class="detalle">Filtrar como siempre: día de hoy, en llegada, todas menos canceladas...</span>
+          </li>
+          <li>
+            <strong>Descargar de Kross en XLSX del día de hoy al final del todo de la página</strong><br>
+            <span class="detalle">Verificar que quien no haya entrado, su hora sean las 20:00 o más tarde para que aparezcan.</span>
           </li>
           <li>
             <strong>En el XLSX, buscar el "Guardar como" y elegir:</strong><br>
-            <span class="detalle">UTF-8 (Debería ser la quinta opción)</span>
+            <span class="detalle">UTF-8 separados por comas. (Debería ser la quinta opción)</span>
           </li>
           <li>
-            <strong>Localizar ahora sí el CSV del día de hoy y colgarlo en el botón "Colgar CSV del día de hoy".</strong>
+            <strong>Localizar donde se haya guardado el CSV del día de hoy y colgarlo en el botón "Colgar CSV del día de hoy".</strong>
           </li>
           <li>
             <strong>Copiar el texto y pegarlo en el correo.</strong>
@@ -41,7 +45,6 @@
         </div>
       </div>
 
-      <!-- CONTENEDOR DE CARGA DE ARCHIVOS -->
       <div class="cargadores">
         <div class="grupo">
           <label class="boton-subir">
@@ -61,7 +64,6 @@
       </div>
     </div>
 
-    <!-- COLUMNA DERECHA (ÁREA DE TEXTO Y BOTONES) -->
     <div class="columna-derecha">
       <textarea id="areaTexto" readonly placeholder="Aquí se generará el texto..."></textarea>
 
