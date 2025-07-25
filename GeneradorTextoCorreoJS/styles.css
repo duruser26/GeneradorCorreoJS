@@ -84,7 +84,7 @@ body {
   margin-bottom: 15px;
   counter-increment: step-counter;
   list-style-type: none;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 .pasos li::before {
@@ -128,8 +128,7 @@ body {
 .cargadores {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 20px;
+  gap: 15px;
   background-color: var(--blanco);
   border-radius: 10px;
   padding: 20px;
