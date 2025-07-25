@@ -1,18 +1,19 @@
 :root {
-  --azul-pastel: #d6e6ff;
-  --azul-oscuro: #4a6fa5;
-  --verde-pastel: #d4edda;
-  --rosa-pastel: #f8d7da;
+  --negro-logo: #1c1c1c;
+  --rojo-logo: #b22222;
+  --dorado-logo: #d4af37;
   --blanco: #ffffff;
   --gris-texto: #495057;
   --sombra: 0 4px 6px rgba(0, 0, 0, 0.1);
   --verde-exito: #4caf50;
+  --verde-pastel: #d4edda;
+  --rosa-pastel: #f8d7da;
 }
 
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--azul-pastel);
+  background-color: var(--dorado-logo);
   color: var(--gris-texto);
   height: 100vh;
   padding: 20px;
@@ -23,31 +24,52 @@ body {
   display: flex;
   height: calc(100vh - 40px);
   gap: 20px;
-  max-width: 1400px;
+  max-width: 95vw;
   margin: 0 auto;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 /* COLUMNA IZQUIERDA */
 .columna-izquierda {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 6;
   gap: 20px;
   min-width: 0;
 }
 
+/* BOTÓN VOLVER */
+.volver-indice {
+  background-color: var(--rojo-logo);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  width: fit-content;
+  font-weight: bold;
+  box-shadow: var(--sombra);
+  transition: background-color 0.3s ease;
+}
+
+.volver-indice:hover {
+  background-color: #8b1a1a;
+}
+
+/* INSTRUCCIONES */
 .instrucciones {
   background-color: var(--blanco);
   border-radius: 10px;
   padding: 20px;
   box-shadow: var(--sombra);
-  flex: 0 0 auto;
+  flex: 0 0 40%;
+  font-size: 0.95rem;
 }
 
 .instrucciones h2 {
-  color: #2c5282;
+  color: var(--rojo-logo);
   margin-top: 0;
-  border-bottom: 2px solid var(--azul-oscuro);
+  border-bottom: 2px solid var(--negro-logo);
   padding-bottom: 10px;
 }
 
@@ -70,7 +92,7 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  background-color: var(--azul-oscuro);
+  background-color: var(--negro-logo);
   color: white;
   width: 22px;
   height: 22px;
@@ -83,10 +105,10 @@ body {
 .detalle {
   display: inline-block;
   color: #4a5568;
-  font-size: 14px;
+  font-size: 13px;
   margin-top: 5px;
   padding-left: 8px;
-  border-left: 3px solid var(--azul-oscuro);
+  border-left: 3px solid var(--rojo-logo);
 }
 
 .nota-destacada {
@@ -95,25 +117,25 @@ body {
   border-radius: 8px;
   margin-top: 20px;
   border-left: 4px solid #ffc107;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .nota-destacada strong {
   color: #856404;
 }
 
-/* CONTENEDOR DE CARGA DE ARCHIVOS */
+/* CARGADORES */
 .cargadores {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px;
   background-color: var(--blanco);
   border-radius: 10px;
   padding: 20px;
   box-shadow: var(--sombra);
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
 }
 
 .grupo {
@@ -123,7 +145,7 @@ body {
 }
 
 .boton-subir {
-  background-color: var(--azul-oscuro);
+  background-color: var(--negro-logo);
   color: white;
   padding: 12px 20px;
   border: none;
@@ -138,7 +160,7 @@ body {
 }
 
 .boton-subir:hover {
-  background-color: #3a5a80;
+  background-color: #333;
   transform: translateY(-2px);
 }
 
@@ -175,7 +197,7 @@ input[type="file"] {
 .columna-derecha {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 4;
   gap: 20px;
 }
 
@@ -208,12 +230,12 @@ input[type="file"] {
 }
 
 #generarBtn {
-  background-color: var(--azul-oscuro);
+  background-color: var(--negro-logo);
   color: white;
 }
 
 #generarBtn:hover {
-  background-color: #3a5a80;
+  background-color: #333;
 }
 
 #copiarBtn {
@@ -233,3 +255,26 @@ input[type="file"] {
 #borrarBtn:hover {
   background-color: #f5c6cb;
 }
+
+.boton-volver {
+  display: block;
+  background-color: var(--rojo-logo);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  font-size: 1rem;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.boton-volver:hover {
+  background-color: #8b1a1a;
+  transform: translateY(-2px);
+}
+
