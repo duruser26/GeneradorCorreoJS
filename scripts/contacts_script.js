@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Generar CSV para Google Contacts (VERSIÓN MEJORADA)
     function generarCSVSalida() {
-        const cabecera = "Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group Membership,Phone 1 - Type,Phone 1 - Value";
+        const cabecera = "First Name,Middle Name,Last Name,Phonetic First Name,Phonetic Middle Name,Phonetic Last Name,Name Prefix,Name Suffix,Nickname,File As,Organization Name,Organization Title,Organization Department,Birthday,Notes,Photo,Labels,E-mail 1 - Label,E-mail 1 - Value,E-mail 2 - Label,E-mail 2 - Value,Phone 1 - Label,Phone 1 - Value";
         const filas = [cabecera];
         const reservasAgrupadas = {};
 
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .join(' ');
             
             const nombreContacto = `${fechaCheckIn} - ${apartamentos.join(', ')} - ${nombreFormateado}`;
-            filas.push(`"${nombreContacto}",,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,,Mobile,${telefono}`);
+            filas.push(`"${nombreContacto}",,,,,,,,,,,,,,,,* myContacts,,,,,,${telefono}`);
         }
 
         return filas.join('\n');
