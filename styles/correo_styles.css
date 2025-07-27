@@ -128,7 +128,8 @@ body {
 .cargadores {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: space-evenly;
+  gap: 20px;
   background-color: var(--blanco);
   border-radius: 10px;
   padding: 20px;
@@ -137,25 +138,28 @@ body {
   min-height: 0;
 }
 
+/* GRUPO DE CARGA */
 .grupo {
   display: flex;
-  gap: 15px;
-  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1em;
+  align-items: stretch;
 }
 
+/* BOTÓN DE SUBIR */
 .boton-subir {
+  flex: 1 1 100%;
   background-color: var(--negro-logo);
   color: white;
-  padding: 12px 20px;
+  padding: 1em;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
   font-weight: 500;
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
   transition: all 0.3s ease;
-  flex: 1;
-  position: relative;
-  overflow: hidden;
 }
 
 .boton-subir:hover {
@@ -168,18 +172,17 @@ body {
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
 }
 
+/* NOMBRE DE ARCHIVO */
 .nombre-archivo {
-  flex: 1;
-  font-size: 0.9rem;
+  flex: 1 1 100%;
+  font-size: clamp(0.8rem, 2vw, 1rem);
   color: var(--gris-texto);
-  padding: 10px;
+  padding: 1em;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   border: 1px solid #ddd;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: all 0.3s;
+  word-break: break-word;
+  transition: all 0.3s ease;
 }
 
 .nombre-archivo.archivo-subido {
@@ -213,6 +216,7 @@ input[type="file"] {
   background-color: var(--blanco);
 }
 
+/* BOTONES GENERALES */
 .botones {
   display: flex;
   gap: 15px;
@@ -255,6 +259,7 @@ input[type="file"] {
   background-color: #f5c6cb;
 }
 
+/* BOTÓN VOLVER ABAJO */
 .boton-volver {
   display: block;
   background-color: var(--rojo-logo);
@@ -272,8 +277,8 @@ input[type="file"] {
   text-decoration: none;
   box-sizing: border-box;
 }
+
 .boton-volver:hover {
   background-color: #8b1a1a;
   transform: translateY(-2px);
 }
-
