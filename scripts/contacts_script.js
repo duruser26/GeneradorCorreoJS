@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsText(file, 'UTF-8');
     }
 
-    // Procesar contenido CSV - VERSIÓN FINAL CORREGIDA
+    // Procesar contenido CSV - FILTRO POR TELÉFONO
     function procesarCSV(contenido) {
         datosCSV = [];
         const lineas = contenido.split(/\r\n|\n/);
@@ -81,56 +81,89 @@ document.addEventListener('DOMContentLoaded', function() {
             throw new Error('No se encontró el encabezado del CSV');
         }
 
-        // Procesar todas las líneas después del encabezado
+        // Procesar líneas después del encabezado
         for (let i = indiceEncabezado + 1; i < lineas.length; i++) {
             const linea = lineas[i].trim();
             if (!linea) continue;
 
-            // Dividir por punto y coma conservando campos vacíos
             const campos = linea.split(';').map(campo => campo.trim().replace(/^"|"$/g, ''));
             
-            // Añadir todas las líneas que tengan al menos fecha y apartamento
-            if (campos.length > 6 && campos[2]) { // Check que tenga fecha (columna 3)
+            // Aplicar filtro: SOLO registros con teléfono no vacío
+            const telefono = campos[14] || '';
+            if (telefono.trim() !== "") {
                 datosCSV.push(campos);
             }
         }
 
         if (datosCSV.length === 0) {
-            throw new Error('No se encontraron reservas válidas en el archivo');
+            throw new Error('No se encontraron reservas con número de teléfono');
         }
     }
 
-    // Generar CSV para Google Contacts - VERSIÓN FINAL CORREGIDA
+    // Generar CSV para Google Contacts (VERSIÓN MEJORADA)
     function generarCSVSalida() {
         const cabecera = "Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group Membership,Phone 1 - Type,Phone 1 - Value";
         const filas = [cabecera];
+        const reservasAgrupadas = {};
 
-        for (let i = 0; i < datosCSV.length; i++) {
-            const fila = datosCSV[i];
+        // Función que NO modifica el teléfono en absoluto (lo deja exactamente igual)
+        const normalizarTelefono = (tel) => (tel || '').trim();
+
+        // Procesar todas las reservas para agruparlas
+        for (const fila of datosCSV) {
+            const fechaCheckIn = formatearFecha(fila[2] || '');
+            const apartamento = (fila[6] || 'Apartamento').trim();
+            let nombreCompleto = (fila[18] || fila[3] || 'Huésped').trim();
+            const telefono = normalizarTelefono(fila[14]);
             
-            // Obtener campos con máxima flexibilidad
-            const fechaCheckIn = formatearFecha(fila[2] || ''); // Columna Check in
-            const apartamento = (fila[6] || 'Apartamento').trim(); // Columna Habitaciones
-            let nombreCompleto = (fila[18] || fila[3] || 'Huésped').trim(); // Referencia o Huéspedes
-            let telefono = (fila[14] || '').trim(); // Columna Teléfono
+            if (!telefono) continue;
 
-            // Limpieza básica de datos
-            nombreCompleto = nombreCompleto.replace(/;/g, ' '); // Eliminar puntos y coma en nombres
-            telefono = telefono.replace(/[^\d+]/g, ''); // Mantener solo números y +
+            // Limpieza del nombre para clave única
+            nombreCompleto = nombreCompleto.toLowerCase()
+                               .replace(/[;,"]/g, '')
+                               .replace(/\s+/g, ' ')
+                               .trim();
+            
+            const clave = `${nombreCompleto}-${telefono}`;
 
-            // Crear contacto con los datos disponibles
-            const nombreContacto = `${fechaCheckIn} - ${apartamento} - ${nombreCompleto}`;
-            const filaSalida = `"${nombreContacto}",,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,,Mobile,${telefono}`;
-            filas.push(filaSalida);
+            if (!reservasAgrupadas[clave]) {
+                reservasAgrupadas[clave] = {
+                    nombre: nombreCompleto,
+                    telefono,
+                    fechaCheckIn,
+                    apartamentos: [apartamento]
+                };
+            } else {
+                // Añadir apartamento si no está ya en la lista
+                if (!reservasAgrupadas[clave].apartamentos.includes(apartamento)) {
+                    reservasAgrupadas[clave].apartamentos.push(apartamento);
+                }
+                // Conservar la fecha de check-in más temprana
+                if (fechaCheckIn < reservasAgrupadas[clave].fechaCheckIn) {
+                    reservasAgrupadas[clave].fechaCheckIn = fechaCheckIn;
+                }
+            }
+        }
+
+        // Generar filas CSV agrupadas
+        for (const clave in reservasAgrupadas) {
+            const { nombre, telefono, fechaCheckIn, apartamentos } = reservasAgrupadas[clave];
+            
+            // Formatear nombre con capitalización correcta
+            const nombreFormateado = nombre.split(' ')
+                .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+                .join(' ');
+            
+            const nombreContacto = `${fechaCheckIn} - ${apartamentos.join(', ')} - ${nombreFormateado}`;
+            filas.push(`"${nombreContacto}",,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,,Mobile,${telefono}`);
         }
 
         return filas.join('\n');
     }
 
-    // Formatear fecha dd/mm/yyyy → yymmdd
+    // Formatear fecha dd/mm/yyyy → yymmdd (sin cambios)
     function formatearFecha(fechaStr) {
         if (!fechaStr) return '';
-        
         const soloFecha = fechaStr.split(' ')[0];
         const match = soloFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
         if (!match) return '';
@@ -142,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return anio.slice(-2) + mes + dia;
     }
 
-    // Generar nombre sugerido basado en fechas
+    // Generar nombre sugerido basado en fechas (sin cambios)
     function generarNombreSugerido() {
         if (!datosCSV.length) return;
 
@@ -168,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Generar archivo final CON CODIFICACIÓN UTF-8 CORRECTA
+    // Generar archivo final con codificación UTF-8 (sin cambios)
     function generarArchivo() {
         if (cargando) {
             mostrarAlerta('Espera a que termine la carga actual', 'error');
@@ -184,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const nombreFinal = nombreInput.value || 'contactos_generados.csv';
             const contenido = generarCSVSalida();
 
-            // Añadir BOM (Byte Order Mark) para UTF-8
+            // Añadir BOM para UTF-8
             const blob = new Blob(["\uFEFF" + contenido], { 
                 type: 'text/csv;charset=utf-8;' 
             });
@@ -198,14 +231,14 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            mostrarAlerta(`¡Archivo generado correctamente! (${datosCSV.length} contactos)`, 'exito');
+            mostrarAlerta(`¡Archivo generado correctamente! (${Object.keys(reservasAgrupadas).length} contactos únicos)`, 'exito');
         } catch (error) {
             console.error('Error:', error);
             mostrarAlerta('Error al generar el archivo', 'error');
         }
     }
 
-    // Actualizar UI
+    // Actualizar UI (sin cambios)
     function actualizarUI() {
         generarBtn.disabled = cargando || !datosCSV.length;
         
