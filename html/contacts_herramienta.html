@@ -8,61 +8,58 @@
 </head>
 <body>
   <div class="contenedor">
-
-    <button id="volver" onclick="window.location.href='../index.html'">Volver al índice</button>
+    <button id="volver">Volver al índice</button>
 
     <div class="instrucciones">
       <h2>Instrucciones paso a paso</h2>
-        <ol class="pasos">
-          <li>
-            <strong>Acceder a las reservas en la parte de Reservas de Kross</strong><br>
-            <span class="detalle">Filtrar como siempre: día de hoy, en llegada, todas menos canceladas...</span>
-          </li>
-          <li>
-            <strong>Seleccionar la horquilla de días para generar contactos.</strong><br>
-          </li>
-          <li>
-            <strong>Descargar al final del todo el XLSX.</strong>
-          </li>
-          <li>
-            <strong>Abrir el XLSX y aceptar el poder modificarlo.</strong><br>
-            <span class="detalle">Estará en ambar-naranja, así se podrá pasar al siguiente paso.</span>
-          </li>
-          <li>
-            <strong>Buscar el "Guardar como" y elegir:</strong><br>
-            <span class="detalle">UTF-8 separados por comas. (Debería ser la quinta opción) en Windows y en MAC una de las últimas.</span>
-          </li>
-          <li>
-            <strong>Localizar donde se haya guardado el CSV, normalmente en la misma carpeta donde se ha descargado.</strong>
-          </li>
-          <li>
-            <strong>Subir el CSV y generar el archivo para Google Contacts.</strong>
-            <span class="detalle">Se creará automáticamente con el formato: <strong>AAAAMMDD_contactos_AAAAMMDD.csv</strong></span>
-          </li>
-        </ol>
+      <ol class="pasos">
+        <li>
+          <strong>Acceder a las reservas en la parte de Reservas de Kross</strong>
+          <span class="detalle">Filtrar como siempre: día de hoy, en llegada, todas menos canceladas...</span>
+        </li>
+        <li>
+          <strong>Seleccionar la horquilla de días para generar contactos.</strong>
+        </li>
+        <li>
+          <strong>Descargar al final del todo el XLSX.</strong>
+        </li>
+        <li>
+          <strong>Abrir el XLSX y aceptar el poder modificarlo.</strong>
+          <span class="detalle">Estará en ambar-naranja, así se podrá pasar al siguiente paso.</span>
+        </li>
+        <li>
+          <strong>Buscar el "Guardar como" y elegir:</strong>
+          <span class="detalle">UTF-8 separados por comas. (Debería ser la quinta opción) en Windows y en MAC una de las últimas.</span>
+        </li>
+        <li>
+          <strong>Localizar donde se haya guardado el CSV.</strong>
+        </li>
+        <li>
+          <strong>Subir el CSV y generar el archivo para Google Contacts.</strong>
+          <span class="detalle">Se creará automáticamente con el formato: <strong>AAAAMMDD_contactos_AAAAMMDD.csv</strong></span>
+        </li>
+      </ol>
 
-        <div class="nota-destacada">
-          <p><strong>Importante 1:</strong> No abrir el CSV, hay veces que Windows se pone tonto y hace cosas raras con los teléfonos y es posible que no funcione.</p>
-          <p><strong>Importante 2:</strong> La etiqueta que genera Google Contacts, por favor, <strong>tenemos que borrarla</strong>.</p>
-        </div>
-    </div>
-
-    <div class="zona-carga">
-      <label for="csvInput" class="boton">Cargar CSV de las fechas a generar</label>
-      <input type="file" id="csvInput" accept=".csv" hidden />
-      <span id="nombreArchivo">Ningún archivo seleccionado</span>
-    </div>
-
-    <div class="zona-generar">
-      <button id="generar">Generar CSV para contactos de Google</button>
-      <div class="zona-nombre">
-        <label for="nombreFinal">Nombre del archivo final:</label>
-        <input type="text" id="nombreFinal" placeholder="Se generará automáticamente" />
+      <div class="nota-destacada">
+        <p><strong>Importante 1:</strong> No abrir el CSV, hay veces que Windows se pone tonto y hace cosas raras con los teléfonos.</p>
+        <p><strong>Importante 2:</strong> La etiqueta que genera Google Contacts, por favor, <strong>tenemos que borrarla</strong>.</p>
       </div>
     </div>
 
-    <div id="mensajeExito" class="mensaje-exito"></div>
+    <div class="panel-acciones">
+      <div class="zona-carga">
+        <label for="csvInput" class="boton">Cargar CSV</label>
+        <input type="file" id="csvInput" accept=".csv" />
+        <span id="nombreArchivo">Ningún archivo seleccionado</span>
+      </div>
 
+      <div class="zona-generar">
+        <button id="generar">Generar CSV para Google Contacts</button>
+        <div class="zona-nombre">
+          <input type="text" id="nombreFinal" placeholder="Nombre generado automáticamente" readonly />
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="../scripts/contacts_script.js"></script>

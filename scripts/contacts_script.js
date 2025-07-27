@@ -1,12 +1,9 @@
-// contacts_script.js - Versión completa y corregida
-
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos del DOM
     const csvInput = document.getElementById('csvInput');
     const generarBtn = document.getElementById('generar');
     const nombreInput = document.getElementById('nombreFinal');
     const nombreArchivoSpan = document.getElementById('nombreArchivo');
-    const mensajeExito = document.getElementById('mensajeExito');
     const volverBtn = document.getElementById('volver');
 
     // Variables
@@ -19,6 +16,18 @@ document.addEventListener('DOMContentLoaded', function() {
     volverBtn.addEventListener('click', () => {
         window.location.href = '../index.html';
     });
+
+    // Mostrar alerta
+    function mostrarAlerta(mensaje, tipo) {
+        const alerta = document.createElement('div');
+        alerta.className = `alert ${tipo}`;
+        alerta.textContent = mensaje;
+        document.body.appendChild(alerta);
+        
+        setTimeout(() => {
+            alerta.remove();
+        }, 3000);
+    }
 
     // Manejar archivo CSV
     function handleFile(event) {
@@ -35,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 nombreArchivoSpan.textContent = file.name;
                 nombreArchivoSpan.classList.add('archivo-subido');
                 generarNombreSugerido();
-                mostrarMensaje('Archivo cargado correctamente', 'exito');
+                mostrarAlerta(`Archivo cargado correctamente (${datosCSV.length} reservas)`, 'exito');
             } catch (error) {
                 console.error('Error:', error);
-                mostrarMensaje('Error al procesar el archivo CSV. Asegúrate de que es el formato correcto.', 'error');
+                mostrarAlerta('Error al procesar el archivo CSV', 'error');
             } finally {
                 cargando = false;
                 actualizarUI();
@@ -46,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         reader.onerror = function() {
-            mostrarMensaje('Error al leer el archivo', 'error');
+            mostrarAlerta('Error al leer el archivo', 'error');
             cargando = false;
             actualizarUI();
         };
@@ -54,29 +63,44 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsText(file, 'UTF-8');
     }
 
-    // Procesar contenido CSV con punto y coma
+    // Procesar contenido CSV - VERSIÓN FINAL CORREGIDA
     function procesarCSV(contenido) {
         datosCSV = [];
         const lineas = contenido.split(/\r\n|\n/);
         
-        // Filtrar líneas vacías y encabezado
-        const lineasValidas = lineas.filter(linea => {
-            return linea.trim() && !linea.startsWith('ID;') && linea.split(';').length > 10;
-        });
-        
-        // Procesar cada línea válida
-        datosCSV = lineasValidas.map(linea => {
-            // Dividir por punto y coma, manejando campos entre comillas
-            return linea.split(/;(?=(?:(?:[^"]*"){2})*[^"]*$)/)
-                       .map(campo => campo.trim().replace(/^"|"$/g, ''));
-        });
+        // Encontrar índice de la línea de encabezado
+        let indiceEncabezado = -1;
+        for (let i = 0; i < lineas.length; i++) {
+            if (lineas[i].startsWith('ID;')) {
+                indiceEncabezado = i;
+                break;
+            }
+        }
+
+        if (indiceEncabezado === -1) {
+            throw new Error('No se encontró el encabezado del CSV');
+        }
+
+        // Procesar todas las líneas después del encabezado
+        for (let i = indiceEncabezado + 1; i < lineas.length; i++) {
+            const linea = lineas[i].trim();
+            if (!linea) continue;
+
+            // Dividir por punto y coma conservando campos vacíos
+            const campos = linea.split(';').map(campo => campo.trim().replace(/^"|"$/g, ''));
+            
+            // Añadir todas las líneas que tengan al menos fecha y apartamento
+            if (campos.length > 6 && campos[2]) { // Check que tenga fecha (columna 3)
+                datosCSV.push(campos);
+            }
+        }
 
         if (datosCSV.length === 0) {
-            throw new Error('No se encontraron datos válidos en el archivo');
+            throw new Error('No se encontraron reservas válidas en el archivo');
         }
     }
 
-    // Generar CSV para Google Contacts
+    // Generar CSV para Google Contacts - VERSIÓN FINAL CORREGIDA
     function generarCSVSalida() {
         const cabecera = "Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group Membership,Phone 1 - Type,Phone 1 - Value";
         const filas = [cabecera];
@@ -84,21 +108,20 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < datosCSV.length; i++) {
             const fila = datosCSV[i];
             
-            // Obtener campos con flexibilidad
-            const fechaCheckIn = formatearFecha(fila[2] || ''); // Columna Check in (índice 2)
-            const apartamento = (fila[6] || 'Sin apartamento').trim(); // Columna Habitaciones (índice 6)
-            let nombreCompleto = (fila[18] || fila[3] || 'Sin nombre').trim(); // Referencia (índice 18) o Huéspedes (índice 3)
-            let telefono = (fila[14] || '').trim(); // Columna Teléfono (índice 14)
+            // Obtener campos con máxima flexibilidad
+            const fechaCheckIn = formatearFecha(fila[2] || ''); // Columna Check in
+            const apartamento = (fila[6] || 'Apartamento').trim(); // Columna Habitaciones
+            let nombreCompleto = (fila[18] || fila[3] || 'Huésped').trim(); // Referencia o Huéspedes
+            let telefono = (fila[14] || '').trim(); // Columna Teléfono
 
-            // Limpiar teléfono (mantener solo dígitos y +)
-            telefono = telefono.replace(/[^\d+]/g, '');
+            // Limpieza básica de datos
+            nombreCompleto = nombreCompleto.replace(/;/g, ' '); // Eliminar puntos y coma en nombres
+            telefono = telefono.replace(/[^\d+]/g, ''); // Mantener solo números y +
 
-            // Solo crear contacto si tenemos datos mínimos
-            if (fechaCheckIn && apartamento && nombreCompleto !== 'Sin nombre') {
-                const nombreContacto = `${fechaCheckIn} - ${apartamento} - ${nombreCompleto}`;
-                const filaSalida = `"${nombreContacto}",,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,,Mobile,${telefono}`;
-                filas.push(filaSalida);
-            }
+            // Crear contacto con los datos disponibles
+            const nombreContacto = `${fechaCheckIn} - ${apartamento} - ${nombreCompleto}`;
+            const filaSalida = `"${nombreContacto}",,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,,Mobile,${telefono}`;
+            filas.push(filaSalida);
         }
 
         return filas.join('\n');
@@ -108,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatearFecha(fechaStr) {
         if (!fechaStr) return '';
         
-        // Extraer solo la parte de la fecha (ignorando hora si existe)
         const soloFecha = fechaStr.split(' ')[0];
         const match = soloFecha.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
         if (!match) return '';
@@ -146,15 +168,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Generar archivo final
+    // Generar archivo final CON CODIFICACIÓN UTF-8 CORRECTA
     function generarArchivo() {
         if (cargando) {
-            mostrarMensaje('Espera a que termine la carga actual', 'error');
+            mostrarAlerta('Espera a que termine la carga actual', 'error');
             return;
         }
 
         if (!datosCSV.length) {
-            mostrarMensaje('Primero carga un archivo CSV válido', 'error');
+            mostrarAlerta('Primero carga un archivo CSV válido', 'error');
             return;
         }
 
@@ -162,12 +184,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const nombreFinal = nombreInput.value || 'contactos_generados.csv';
             const contenido = generarCSVSalida();
 
-            if (contenido.split('\n').length <= 1) {
-                mostrarMensaje('No se encontraron contactos válidos', 'error');
-                return;
-            }
-
-            const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
+            // Añadir BOM (Byte Order Mark) para UTF-8
+            const blob = new Blob(["\uFEFF" + contenido], { 
+                type: 'text/csv;charset=utf-8;' 
+            });
+            
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -177,21 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            mostrarMensaje('¡Archivo generado correctamente!', 'exito');
+            mostrarAlerta(`¡Archivo generado correctamente! (${datosCSV.length} contactos)`, 'exito');
         } catch (error) {
             console.error('Error:', error);
-            mostrarMensaje('Error al generar el archivo', 'error');
+            mostrarAlerta('Error al generar el archivo', 'error');
         }
-    }
-
-    // Mostrar mensajes
-    function mostrarMensaje(texto, tipo) {
-        mensajeExito.textContent = texto;
-        mensajeExito.className = `mensaje-exito ${tipo}`;
-        
-        setTimeout(() => {
-            mensajeExito.className = 'mensaje-exito';
-        }, 5000);
     }
 
     // Actualizar UI

@@ -1,131 +1,130 @@
 /* =========================
-   VARIABLES DE COLOR Y ESTILOS GLOBALES
+   VARIABLES Y ESTILOS BASE
    ========================= */
 :root {
   --negro-logo: #1c1c1c;
   --rojo-logo: #b22222;
   --dorado-logo: #d4af37;
   --blanco: #ffffff;
-  --gris-texto: #495057;
-  --sombra: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --verde-exito: #4caf50;
-  --verde-pastel: #d4edda;
-  --rosa-pastel: #f8d7da;
-  --gris-borde: #e2e8f0;
-  --gris-fondo: #f8fafc;
+  --gris-claro: #f5f5f5;
+  --gris-medio: #e0e0e0;
+  --gris-oscuro: #495057;
+  --verde: #4caf50;
+  --rojo: #f44336;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--dorado-logo);
-  color: var(--gris-texto);
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
+  color: var(--gris-oscuro);
+  line-height: 1.6;
+  padding: 10px;
 }
 
 .contenedor {
-  width: 90%;
-  max-width: 1000px;
-  margin: 30px auto;
+  max-width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
 /* =========================
-   BOTÓN VOLVER AL ÍNDICE
+   BOTÓN VOLVER (MODIFICADO)
    ========================= */
 #volver {
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px 15px;
   background-color: var(--rojo-logo);
   color: white;
-  border-radius: 10px;
-  text-align: center;
+  border: none;
+  border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: var(--sombra);
-  transition: all 0.3s ease;
-  border: none;
-  font-size: 1rem;
 }
 
 #volver:hover {
-  background-color: #8b1a1a;
-  transform: translateY(-2px);
+  background-color: #9b1a1a;
 }
 
 /* =========================
    INSTRUCCIONES
    ========================= */
 .instrucciones {
-  width: 100%;
   background-color: var(--blanco);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: var(--sombra);
-  font-size: 0.95rem;
-  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 15px;
 }
 
 .instrucciones h2 {
   color: var(--rojo-logo);
-  margin-top: 0;
-  border-bottom: 2px solid var(--negro-logo);
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gris-medio);
+  font-size: 1.2rem;
 }
 
 .pasos {
-  counter-reset: step-counter;
-  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: pasos;
+  padding-left: 5px;
 }
 
 .pasos li {
   position: relative;
-  padding-left: 30px;
-  margin-bottom: 15px;
-  counter-increment: step-counter;
-  list-style-type: none;
-  line-height: 1.4;
+  padding-left: 28px;
+  list-style: none;
 }
 
 .pasos li::before {
-  content: counter(step-counter);
+  content: counter(pasos);
+  counter-increment: pasos;
   position: absolute;
   left: 0;
   top: 0;
+  width: 20px;
+  height: 20px;
   background-color: var(--negro-logo);
   color: white;
-  width: 22px;
-  height: 22px;
   border-radius: 50%;
-  text-align: center;
-  font-size: 14px;
-  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
 }
 
-/* =========================
-   DETALLE Y NOTAS DESTACADAS
-   ========================= */
 .detalle {
-  display: inline-block;
-  color: #4a5568;
-  font-size: 13px;
-  margin-top: 5px;
-  padding-left: 8px;
-  border-left: 3px solid var(--rojo-logo);
+  display: block;
+  color: var(--gris-oscuro);
+  font-size: 0.8rem;
+  margin-top: 4px;
+  padding-left: 6px;
+  border-left: 2px solid var(--rojo-logo);
 }
 
 .nota-destacada {
   background-color: #fff3cd;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 20px;
-  border-left: 4px solid #ffc107;
-  font-size: 13px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 15px;
+  font-size: 0.8rem;
+  border-left: 3px solid #ffc107;
+}
+
+.nota-destacada p {
+  margin-bottom: 6px;
+}
+
+.nota-destacada p:last-child {
+  margin-bottom: 0;
 }
 
 .nota-destacada strong {
@@ -133,122 +132,143 @@ body {
 }
 
 /* =========================
-   ZONAS DE CARGA Y GENERACIÓN
+   ZONAS DE ACCIÓN (MODIFICADO)
    ========================= */
-.zona-carga,
-.zona-generar {
-  width: 100%;
+.panel-acciones {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
-/* =========================
-   BOTONES Y FORMULARIOS
-   ========================= */
-.boton,
-#generar {
+.zona-carga {
+  display: flex;
+  gap: 10px;
   width: 100%;
-  padding: 12px 20px;
+}
+
+.boton {
+  width: 49%;
+  padding: 10px 15px;
   background-color: var(--negro-logo);
   color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  text-align: center;
   border: none;
-  transition: all 0.3s ease;
-  box-shadow: var(--sombra);
-  font-size: 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  height: 38px;
 }
 
-.boton:hover,
-#generar:hover {
+.boton:hover {
   background-color: #333;
-  transform: translateY(-2px);
 }
 
-/* =========================
-   ZONA DE NOMBRE PERSONALIZADO
-   ========================= */
-.zona-nombre {
+#csvInput {
+  display: none;
+}
+
+#nombreArchivo {
+  width: 49%;
+  background-color: var(--gris-claro);
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.zona-generar {
+  display: flex;
+  gap: 10px;
   width: 100%;
-  background-color: var(--blanco);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: var(--sombra);
 }
 
-.zona-nombre label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--negro-logo);
+#generar {
+  width: 49%;
+  padding: 10px 15px;
+  background-color: var(--verde);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  height: 38px;
+}
+
+#generar:hover {
+  background-color: #3d8b40;
+}
+
+#generar:disabled {
+  background-color: var(--gris-medio);
+  cursor: not-allowed;
+}
+
+.zona-nombre {
+  width: 49%;
 }
 
 #nombreFinal {
   width: 100%;
-  padding: 10px 12px;
-  border: 2px solid var(--gris-borde);
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  background-color: var(--gris-fondo);
-}
-
-#nombreFinal:focus {
-  outline: none;
-  border-color: var(--dorado-logo);
-  background-color: var(--blanco);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  padding: 8px 10px;
+  border: 1px solid var(--gris-medio);
+  border-radius: 4px;
+  background-color: var(--gris-claro);
+  font-size: 0.9rem;
+  height: 38px;
 }
 
 /* =========================
-   NOMBRE DE ARCHIVO
+   ALERTAS (REEMPLAZO PARA MENSAJES)
    ========================= */
-#nombreArchivo {
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-style: italic;
-}
-
-#nombreArchivo.archivo-subido {
-  border-left: 4px solid var(--verde-exito);
-  background-color: #f0fff0;
-  font-weight: 500;
-}
-
-/* =========================
-   MENSAJES DE ESTADO
-   ========================= */
-.mensaje-exito {
-  margin-top: 15px;
+.alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 12px 20px;
-  background-color: var(--verde-pastel);
-  color: #166534;
-  border-left: 5px solid #22c55e;
-  border-radius: 6px;
+  border-radius: 4px;
   font-weight: bold;
+  z-index: 1000;
+  animation: fadeInOut 3s forwards;
   display: none;
 }
 
+.alert.exito {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; display: block; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
 /* =========================
-   SPINNER DE CARGA
+   SPINNER
    ========================= */
 .spinner {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   border-top-color: white;
-  animation: spin 1s ease-in-out infinite;
-  margin-right: 8px;
+  animation: spin 1s linear infinite;
+  margin-right: 6px;
   vertical-align: middle;
 }
 
