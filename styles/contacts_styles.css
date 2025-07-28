@@ -11,6 +11,8 @@
   --verde: #4CAF50;
   --verde-oscuro: #388e3c;
   --rojo-error: #f44336;
+  --sombra: 0 2px 10px rgba(0,0,0,0.08);
+  --ancho-contenido: 80%;
 }
 
 * {
@@ -25,26 +27,33 @@ body {
   color: var(--negro);
   line-height: 1.6;
   padding: 20px;
-}
-
-.contenedor {
-  max-width: 900px;
-  margin: 0 auto;
-  background-color: var(--blanco);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* =========================
-   BOTÓN VOLVER (ESTILO MEJORADO)
+   CONTENEDOR PRINCIPAL
    ========================= */
-.btn-volver {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 10px 20px;
+.contenedor {
+  width: 100%;
+  max-width: 1400px;
+  background-color: var(--blanco);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========================
+   BOTÓN VOLVER (CORRECCIÓN 1)
+   ========================= */
+#volver {
+  width: var(--ancho-contenido);
+  padding: 12px;
   background-color: var(--rojo);
   color: var(--blanco);
   border: none;
@@ -52,30 +61,28 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--sombra);
+  font-size: 1rem;
 }
 
-.btn-volver:hover {
+#volver:hover {
   background-color: #8a0e13;
   transform: translateY(-2px);
 }
 
-.btn-volver::before {
-  content: "←";
-}
-
 /* =========================
-   INSTRUCCIONES (ESTILO MEJORADO)
+   INSTRUCCIONES (CORRECCIÓN 2)
    ========================= */
 .instrucciones {
-  margin-top: 50px;
+  width: var(--ancho-contenido);
+  margin-bottom: 30px;
   background-color: var(--blanco);
   padding: 25px;
   border-radius: 8px;
   border: 1px solid var(--gris-medio);
+  box-shadow: var(--sombra);
 }
 
 .instrucciones h2 {
@@ -114,7 +121,6 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .detalle {
@@ -143,23 +149,25 @@ body {
 }
 
 /* =========================
-   PANEL DE ACCIONES (ESTILO MEJORADO)
+   PANEL DE ACCIONES (CORRECCIONES 3 y 4)
    ========================= */
 .panel-acciones {
-  margin-top: 30px;
+  width: var(--ancho-contenido);
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 .zona-carga {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 15px;
   align-items: center;
 }
 
 .boton {
-  padding: 12px 24px;
+  width: 100%;
+  padding: 12px;
   background-color: var(--negro);
   color: var(--blanco);
   border: none;
@@ -168,7 +176,10 @@ body {
   cursor: pointer;
   transition: all 0.3s;
   text-align: center;
-  flex: 1;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .boton:hover {
@@ -181,7 +192,7 @@ body {
 }
 
 #nombreArchivo {
-  flex: 2;
+  width: 100%;
   padding: 12px;
   background-color: var(--gris-claro);
   border-radius: 6px;
@@ -189,15 +200,21 @@ body {
   font-size: 0.9rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 44px;
+  display: flex;
+  align-items: center;
 }
 
 .zona-generar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 15px;
 }
 
 #generar {
-  padding: 12px 24px;
+  width: 100%;
+  padding: 12px;
   background-color: var(--verde);
   color: var(--blanco);
   border: none;
@@ -205,7 +222,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s;
-  flex: 1;
+  height: 44px;
 }
 
 #generar:hover {
@@ -220,7 +237,7 @@ body {
 }
 
 .zona-nombre {
-  flex: 2;
+  width: 100%;
 }
 
 #nombreFinal {
@@ -230,92 +247,48 @@ body {
   border-radius: 6px;
   background-color: var(--gris-claro);
   font-size: 0.9rem;
-}
-
-/* =========================
-   ALERTAS (ESTILO MEJORADO)
-   ========================= */
-.alert {
-  position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 15px 30px;
-  border-radius: 6px;
-  font-weight: bold;
-  z-index: 1000;
-  animation: fadeInOut 3s forwards;
-  display: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  min-width: 300px;
-  text-align: center;
-}
-
-.alert.exito {
-  background-color: #e8f5e9;
-  color: var(--verde-oscuro);
-  border: 1px solid #c8e6c9;
-}
-
-.alert.error {
-  background-color: #ffebee;
-  color: var(--rojo-error);
-  border: 1px solid #ffcdd2;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; display: block; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; display: none; }
-}
-
-/* =========================
-   SPINNER (ESTILO MEJORADO)
-   ========================= */
-.spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 3px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  border-top-color: var(--blanco);
-  animation: spin 1s ease-in-out infinite;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  height: 44px;
 }
 
 /* =========================
    RESPONSIVE
    ========================= */
+@media (max-width: 1024px) {
+  :root {
+    --ancho-contenido: 90%;
+  }
+}
+
 @media (max-width: 768px) {
   .contenedor {
     padding: 20px;
   }
   
-  .btn-volver {
-    position: static;
-    margin-bottom: 20px;
-    width: 100%;
+  :root {
+    --ancho-contenido: 100%;
   }
   
   .zona-carga,
   .zona-generar {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .boton,
-  #generar,
-  #nombreArchivo {
-    width: 100%;
+    grid-template-columns: 1fr;
   }
   
   .pasos li {
     padding-left: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+  
+  .pasos li {
+    padding-left: 30px;
+  }
+  
+  .pasos li::before {
+    width: 22px;
+    height: 22px;
   }
 }
