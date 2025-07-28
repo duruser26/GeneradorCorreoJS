@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Mapa de Calor - Reservas</title>
+    <link rel="stylesheet" href="../styles/calendario_styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calendario de Reservas</h1>
+        
+        <div class="controls">
+            <div class="file-input-group">
+                <label for="arrivalsFile">Archivo de Llegadas:</label>
+                <input type="file" id="arrivalsFile" accept=".csv">
+                <span class="file-info" id="arrivalsFileInfo">No seleccionado</span>
+            </div>
+            
+            <div class="file-input-group">
+                <label for="departuresFile">Archivo de Salidas:</label>
+                <input type="file" id="departuresFile" accept=".csv">
+                <span class="file-info" id="departuresFileInfo">No seleccionado</span>
+            </div>
+            
+            <div class="date-selection">
+                <div class="select-group">
+                    <label for="monthSelector">Mes:</label>
+                    <select id="monthSelector" class="date-select">
+                        <!-- Generado automáticamente por JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="select-group">
+                    <label for="yearSelector">Año:</label>
+                    <select id="yearSelector" class="date-select">
+                        <!-- Generado automáticamente por JavaScript -->
+                    </select>
+                </div>
+            </div>
+            
+            <button id="loadBtn" class="load-button">
+                <span class="button-icon">🔄</span>
+                <span class="button-text">Actualizar Calendario</span>
+            </button>
+        </div>
+        
+        <!-- Tabla permanente del calendario -->
+        <div id="calendar">
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Dom</th>
+                        <th>Lun</th>
+                        <th>Mar</th>
+                        <th>Mié</th>
+                        <th>Jue</th>
+                        <th>Vie</th>
+                        <th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas de días se generarán dinámicamente -->
+                    <tr>
+                        <td colspan="7" class="empty-calendar">
+                            Carga archivos y selecciona fecha para ver el calendario
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="legend">
+            <div class="legend-section">
+                <h3 class="legend-title">Llegadas</h3>
+                <div class="legend-color-scale arrival-scale">
+                    <div class="legend-step" style="background-color: #e8f5e9;"><span>0-4</span></div>
+                    <div class="legend-step" style="background-color: #c8e6c9;"><span>5-9</span></div>
+                    <div class="legend-step" style="background-color: #a5d6a7;"><span>10-14</span></div>
+                    <div class="legend-step" style="background-color: #81c784;"><span>15-19</span></div>
+                    <div class="legend-step" style="background-color: #66bb6a;"><span>20-24</span></div>
+                    <div class="legend-step" style="background-color: #4caf50;"><span>25-29</span></div>
+                    <div class="legend-step" style="background-color: #388e3c;"><span>30-34</span></div>
+                    <div class="legend-step" style="background-color: #2e7d32;"><span>35+</span></div>
+                </div>
+            </div>
+            
+            <div class="legend-section">
+                <h3 class="legend-title">Salidas</h3>
+                <div class="legend-color-scale departure-scale">
+                    <div class="legend-step" style="background-color: #ffebee;"><span>0-4</span></div>
+                    <div class="legend-step" style="background-color: #ffcdd2;"><span>5-9</span></div>
+                    <div class="legend-step" style="background-color: #ef9a9a;"><span>10-14</span></div>
+                    <div class="legend-step" style="background-color: #e57373;"><span>15-19</span></div>
+                    <div class="legend-step" style="background-color: #ef5350;"><span>20-24</span></div>
+                    <div class="legend-step" style="background-color: #f44336;"><span>25-29</span></div>
+                    <div class="legend-step" style="background-color: #e53935;"><span>30-34</span></div>
+                    <div class="legend-step" style="background-color: #c62828;"><span>35+</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../scripts/calendario_script.js"></script>
+</body>
+</html>

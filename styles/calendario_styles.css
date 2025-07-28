@@ -1,0 +1,294 @@
+/* Estilos base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Controles */
+.controls {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 2px solid #000000;
+}
+
+.file-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.file-input-group label {
+    font-weight: bold;
+}
+
+.file-info {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Selectores de fecha */
+.date-selection {
+    display: flex;
+    gap: 10px;
+}
+
+.select-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.select-group label {
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.date-select {
+    padding: 8px 12px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+}
+
+/* Botón */
+.load-button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.load-button:hover {
+    background-color: #45a049;
+}
+
+.load-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Calendario */
+#calendar {
+    overflow-x: auto;
+    margin-top: 20px;
+    border: 3px solid #000000;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.calendar-table th {
+    background-color: #f0f0f0;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px solid #000000;
+    border-bottom: 3px solid #000000;
+}
+
+.calendar-table td {
+    border: 2px solid #000000;
+    height: 80px;
+    width: 14.28%;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+    background-color: white;
+}
+
+.calendar-table td.today {
+    border: 3px solid #FFC107;
+}
+
+.calendar-table td.empty-day {
+    background-color: #f9f9f9;
+}
+
+.empty-calendar {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+    font-style: italic;
+}
+
+/* Celdas de día */
+.day-cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.day-number {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    z-index: 2;
+}
+
+.half-container {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.arrival-container {
+    top: 0;
+    border-bottom: 1px solid #000000;
+}
+
+.departure-container {
+    bottom: 0;
+}
+
+.cell-content {
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.cell-count {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.cell-label {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+/* Leyenda */
+#legend {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 2px solid #000000;
+}
+
+.legend-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.legend-title {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+
+.legend-color-scale {
+    display: flex;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.legend-step {
+    width: 40px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+    border: 1px solid #000000;
+    display: none;
+}
+
+/* Mensajes de estado */
+.status-message {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid transparent;
+}
+
+/* Spinner */
+.spinner {
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Validación visual */
+input[type="file"]:valid + .file-info {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+input[type="file"]:invalid + .file-info {
+    color: #F44336;
+}

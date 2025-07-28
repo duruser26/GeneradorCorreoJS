@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrucciones - Calendario Mapa de Calor</title>
+  <link rel="stylesheet" href="../styles/contacts_styles.css" />
+</head>
+<body>
+  <div class="contenedor">
+    <button id="volver" class="btn-volver">Volver al índice</button>
+
+    <div class="instrucciones">
+      <h2>Instrucciones paso a paso</h2>
+      <ol class="pasos">
+        <li>
+          <strong>Generar los archivos CSV desde el sistema de reservas</strong>
+          <span class="detalle">Necesitarás dos archivos separados: uno para llegadas (Check-in) y otro para salidas (Check-out)</span>
+        </li>
+        <li>
+          <strong>Seleccionar el mes y año a visualizar</strong>
+          <span class="detalle">El calendario solo mostrará datos para el período seleccionado</span>
+        </li>
+        <li>
+          <strong>Cargar ambos archivos en la herramienta</strong>
+          <span class="detalle">Asegúrate de que:
+            <ul>
+              <li>El archivo de <em>llegadas</em> contiene la columna "Check in"</li>
+              <li>El archivo de <em>salidas</em> contiene la columna "Check-out"</li>
+            </ul>
+          </span>
+        </li>
+        <li>
+          <strong>Generar el calendario</strong>
+          <span class="detalle">Haz clic en "Generar Calendario" para visualizar el mapa de calor</span>
+        </li>
+      </ol>
+
+      <div class="nota-destacada">
+        <p><strong>Importante 1:</strong> Las fechas en los CSV deben estar en formato <strong>DD/MM/YYYY</strong>.</p>
+        <p><strong>Importante 2:</strong> Los colores representan la densidad: 
+          <span style="color: #4CAF50;">verde</span> para llegadas, 
+          <span style="color: #F44336;">rojo</span> para salidas (más intenso = mayor cantidad).
+        </p>
+      </div>
+    </div>
+
+    <div class="panel-acciones">
+      <a href="calendario_herramienta.html" class="boton-herramienta">Usar Herramienta de Calendario</a>
+    </div>
+  </div>
+
+  <script>
+    // Botón "Volver al índice"
+    document.getElementById('volver').addEventListener('click', () => {
+      window.location.href = '../index.html';
+    });
+  </script>
+</body>
+</html>
