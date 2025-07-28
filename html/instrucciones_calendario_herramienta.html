@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instrucciones - Calendario Mapa de Calor</title>
-  <link rel="stylesheet" href="../styles/contacts_styles.css" />
+  <link rel="stylesheet" href="../styles/instrucciones_calendario_styles.css">
 </head>
 <body>
   <div class="contenedor">
-    <button id="volver" class="btn-volver">Volver al índice</button>
-
     <div class="instrucciones">
       <h2>Instrucciones paso a paso</h2>
       <ol class="pasos">
@@ -45,16 +43,10 @@
       </div>
     </div>
 
-    <div class="panel-acciones">
-      <a href="calendario_herramienta.html" class="boton-herramienta">Usar Herramienta de Calendario</a>
+    <div class="botones-contenedor">
+      <button onclick="window.location.href='../index.html'" class="boton boton-volver">Volver al índice</button>
+      <button onclick="window.location.href='./calendario_herramienta.html'" class="boton boton-herramienta">Usar Herramienta</button>
     </div>
   </div>
-
-  <script>
-    // Botón "Volver al índice"
-    document.getElementById('volver').addEventListener('click', () => {
-      window.location.href = '../index.html';
-    });
-  </script>
 </body>
 </html>
